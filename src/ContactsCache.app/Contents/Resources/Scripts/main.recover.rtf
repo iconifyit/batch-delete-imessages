@@ -1,0 +1,999 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2636
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Verdana;\f1\fnil\fcharset0 Verdana-Bold;\f2\fnil\fcharset0 Verdana-Italic;
+}
+{\colortbl;\red255\green255\blue255;\red76\green78\blue78;\red0\green0\blue0;\red108\green5\blue211;
+\red0\green0\blue255;\red64\green128\blue0;\red0\green22\blue176;\red251\green0\blue7;}
+{\*\expandedcolortbl;;\csgenericrgb\c29999\c30457\c30457;\csgenericrgb\c0\c0\c0;\csgenericrgb\c42337\c1841\c82833;
+\csgenericrgb\c0\c0\c100000;\csgenericrgb\c25000\c50001\c0;\csgenericrgb\c0\c8656\c68986;\cssrgb\c100000\c0\c0;}
+\deftab480
+\pard\pardeftab480\slleading40\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 --\cf3 \
+\pard\pardeftab480\slleading40\pardirnatural\partightenfactor0
+\cf2 --	Created by: Scott Lewis\cf3 \
+\cf2 --	Created on: 11/2/22\cf3 \
+\cf2 --\cf3 \
+\cf2 --	Copyright \'a9 2022 MyCompanyName, All Rights Reserved\cf3 \
+\cf2 --\cf3 \
+\
+
+\f1\b use
+\f0\b0  \cf4 AppleScript\cf3  \cf5 version\cf3  "2.4" \cf2 -- Yosemite (10.10) or later\cf3 \
+
+\f1\b use
+\f0\b0  
+\f2\i \cf5 scripting additions
+\f0\i0 \cf3 \
+\
+
+\f1\b property
+\f0\b0  \cf6 ROOT_DIR\cf3  : ""\
+\
+
+\f1\b set
+\f0\b0  \cf6 _HERE_\cf3  
+\f1\b to
+\f0\b0  ""\
+
+\f1\b tell
+\f0\b0  
+\f2\i \cf5 application
+\f0\i0 \cf3  "Finder"\
+	
+\f1\b set
+\f0\b0  \cf6 _HERE_\cf3  
+\f1\b to
+\f0\b0  
+\f2\i \cf5 container
+\f0\i0 \cf3  
+\f1\b of
+\f0\b0  (
+\f1\b \cf7 path to
+\f0\b0 \cf3  
+\f1\b me
+\f0\b0 ) 
+\f1\b as
+\f0\b0  
+\f2\i \cf5 text
+\f0\i0 \cf3 \
+
+\f1\b end
+\f0\b0  
+\f1\b tell
+\f0\b0 \
+\
+
+\f1\b set
+\f0\b0  \cf6 _HERE_\cf3  
+\f1\b to
+\f0\b0  \cf4 POSIX path\cf3  
+\f1\b of
+\f0\b0  ((
+\f1\b \cf7 path to
+\f0\b0 \cf3  
+\f1\b me
+\f0\b0  \cf7 as\cf3  
+\f2\i \cf5 text
+\f0\i0 \cf3 ) & "::") 
+\f1\b as
+\f0\b0  
+\f2\i \cf5 string
+\f0\i0 \cf3 \
+
+\f1\b set
+\f0\b0  \cf6 _ROOT_\cf3  
+\f1\b to
+\f0\b0  \cf4 POSIX path\cf3  
+\f1\b of
+\f0\b0  ((
+\f2\i \cf5 POSIX file
+\f0\i0 \cf3  \cf6 _HERE_\cf3 ) & "::" 
+\f1\b as
+\f0\b0  
+\f2\i \cf5 string
+\f0\i0 \cf3 )\
+
+\f1\b set
+\f0\b0  \cf6 _SCPT_\cf3  
+\f1\b to
+\f0\b0  \cf4 POSIX path\cf3  
+\f1\b of
+\f0\b0  (\cf6 _ROOT_\cf3  & "utils.scpt") 
+\f1\b as
+\f0\b0  
+\f2\i \cf5 string
+\f0\i0 \cf3 \
+\
+
+\f1\b set
+\f0\b0  
+\f1\b my
+\f0\b0  \cf6 ROOT_DIR\cf3  
+\f1\b to
+\f0\b0  \cf6 _HERE_\cf3 \
+\
+\
+
+\f1\b set
+\f0\b0  \cf6 ScriptTools\cf3  
+\f1\b to
+\f0\b0  
+\f1\b \cf7 load script
+\f0\b0 \cf3  
+\f2\i \cf5 file
+\f0\i0 \cf3  (
+\f2\i \cf5 POSIX file
+\f0\i0 \cf3  (\cf6 _HERE_\cf3  & "utils.scpt"))\
+\
+\cf2 -- set contacts to ScriptTools's parse_ini(_HERE_ & "contacts.ini")\cf3 \
+\
+
+\f1\b set
+\f0\b0  \cf6 _contacts\cf3  
+\f1\b to
+\f0\b0  \cf6 ScriptTools's\cf3  \cf8 read_lines\cf3 (\cf6 _HERE_\cf3  & "contacts.ini")\
+\
+
+\f1\b if
+\f0\b0  (
+\f1\b \cf5 count
+\f0\b0 \cf3  
+\f1\b of
+\f0\b0  \cf6 _contacts\cf3 ) 
+\f1\b is
+\f0\b0  
+\f1\b greater than
+\f0\b0  0 
+\f1\b then
+\f0\b0 \
+	
+\f1\b repeat
+\f0\b0  
+\f1\b with
+\f0\b0  \cf6 _contact\cf3  
+\f1\b in
+\f0\b0  \cf6 _contacts\cf3 \
+		
+\f1\b my
+\f0\b0  \cf8 append_to_file\cf3 (\cf6 _contact\cf3 , \cf6 PEOPLE_FILE\cf3 )\
+	
+\f1\b end
+\f0\b0  
+\f1\b repeat
+\f0\b0 \
+
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+\
+\cf2 -- set contacts to do shell script "perl -p -e 's/\\\\n|\\\\r/;/' " & _HERE_ & "contacts.ini"\cf3 \
+\cf2 -- log ScriptTools's split(contacts, ";")\cf3 \
+\
+
+\f1\b set
+\f0\b0  \cf6 chatsToKill\cf3  
+\f1\b to
+\f0\b0  \{\}\
+\
+
+\f1\b on
+\f0\b0  \cf8 digits_only\cf3 (\cf6 _source\cf3 )\
+	
+\f1\b return
+\f0\b0  
+\f1\b \cf7 do shell script
+\f0\b0 \cf3  "THESTRING=\\"" & \cf6 _source\cf3  & "\\" && echo \\"$\{THESTRING//[!0-9]/\}\\""\
+
+\f1\b end
+\f0\b0  \cf8 digits_only\cf3 \
+\
+
+\f1\b on
+\f0\b0  \cf8 letters_only\cf3 (\cf6 _source\cf3 )\
+	
+\f1\b return
+\f0\b0  
+\f1\b \cf7 do shell script
+\f0\b0 \cf3  "PERSON=\\"" & \cf6 _source\cf3  & "\\" && echo $PERSON | sed 's/[^A-Za-z]*//g' | awk '\{print tolower($0)\}'"\
+
+\f1\b end
+\f0\b0  \cf8 letters_only\cf3 \
+\
+
+\f1\b on
+\f0\b0  \cf8 to_lowercase\cf3 (\cf6 _source\cf3 )\
+	
+\f1\b return
+\f0\b0  
+\f1\b \cf7 do shell script
+\f0\b0 \cf3  "echo \\"" & \cf6 _source\cf3  & "\\" | tr '[:upper:]' '[:lower:]'"\
+	\cf2 -- return do shell script "STR=\\"" & _source & "\\" && echo $STR | awk '\{print tolower($0)\}'"\cf3 \
+
+\f1\b end
+\f0\b0  \cf8 to_lowercase\cf3 \
+\
+
+\f1\b on
+\f0\b0  \cf8 append_to_file\cf3 (\cf6 the_text\cf3 , \cf6 the_file\cf3 )\
+	
+\f1\b \cf7 do shell script
+\f0\b0 \cf3  "echo \\"" & \cf6 the_text\cf3  & "\\" >> " & \cf6 the_file\cf3 \
+
+\f1\b end
+\f0\b0  \cf8 append_to_file\cf3 \
+\
+
+\f1\b on
+\f0\b0  \cf8 last_n_digits\cf3 (\cf6 _string\cf3 , \cf6 n\cf3 )\
+	
+\f1\b return
+\f0\b0  
+\f1\b \cf7 do shell script
+\f0\b0 \cf3  "echo \\"" & \cf6 _string\cf3  & "\\" | tail -c " & (\cf6 n\cf3  + 1 
+\f1\b as
+\f0\b0  
+\f2\i \cf5 string
+\f0\i0 \cf3 )\
+
+\f1\b end
+\f0\b0  \cf8 last_n_digits\cf3 \
+\
+
+\f1\b on
+\f0\b0  \cf8 is_email\cf3 (\cf6 _string\cf3 )\
+	
+\f1\b try
+\f0\b0 \
+		\cf2 -- output=$(echo "scott@atomiclotus.net" | grep ".*@.*" 2>&1) && echo $output\cf3 \
+		\cf2 -- "output=$(echo \\"" & _string & "\\" | grep \\".*@.*\\" 2>&1) && echo $output"\cf3 \
+		
+\f1\b set
+\f0\b0  \cf6 test\cf3  
+\f1\b to
+\f0\b0  
+\f1\b \cf7 do shell script
+\f0\b0 \cf3  "output=$(echo \\"" & \cf6 _string\cf3  & "\\" | grep \\".*@.*\\" 2>&1) || true && echo $output"\
+		
+\f1\b \cf5 log
+\f0\b0 \cf3  \cf6 test\cf3 \
+		
+\f1\b if
+\f0\b0  (
+\f1\b \cf5 count
+\f0\b0 \cf3  
+\f1\b of
+\f0\b0  \cf6 test\cf3 ) 
+\f1\b is
+\f0\b0  
+\f1\b greater than
+\f0\b0  \cf6 zero\cf3  
+\f1\b then
+\f0\b0 \
+			
+\f1\b return
+\f0\b0  
+\f2\i \cf4 true
+\f0\i0 \cf3 \
+		
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+		
+\f1\b return
+\f0\b0  
+\f2\i \cf4 false
+\f0\i0 \cf3 \
+	
+\f1\b end
+\f0\b0  
+\f1\b try
+\f0\b0 \
+	
+\f1\b return
+\f0\b0  
+\f2\i \cf4 false
+\f0\i0 \cf3 \
+
+\f1\b end
+\f0\b0  \cf8 is_email\cf3 \
+\
+
+\f1\b on
+\f0\b0  \cf8 simple_email_test\cf3 (\cf6 _string\cf3 )\
+	
+\f1\b set
+\f0\b0  \cf6 _offset\cf3  
+\f1\b to
+\f0\b0  
+\f1\b \cf7 offset
+\f0\b0 \cf3  \cf7 of\cf3  "@" \cf7 in\cf3  \cf6 _string\cf3 \
+	
+\f1\b if
+\f0\b0  \cf6 _offset\cf3  
+\f1\b is
+\f0\b0  
+\f1\b greater than
+\f0\b0  0 
+\f1\b then
+\f0\b0 \
+		
+\f1\b \cf5 log
+\f0\b0 \cf3  "Offset of @ in string is " & \cf6 _offset\cf3 \
+		
+\f1\b if
+\f0\b0  
+\f1\b \cf7 offset
+\f0\b0 \cf3  \cf7 of\cf3  "." \cf7 in\cf3  \cf6 _string\cf3  
+\f1\b is
+\f0\b0  
+\f1\b greater than
+\f0\b0  \cf6 _offset\cf3  
+\f1\b then
+\f0\b0 \
+			
+\f1\b \cf5 log
+\f0\b0 \cf3  "Offset of . in string is " & \cf6 _offset\cf3 \
+			
+\f1\b return
+\f0\b0  
+\f2\i \cf4 true
+\f0\i0 \cf3 \
+		
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+	
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+	
+\f1\b return
+\f0\b0  
+\f2\i \cf4 false
+\f0\i0 \cf3 \
+
+\f1\b end
+\f0\b0  \cf8 simple_email_test\cf3 \
+\
+
+\f1\b on
+\f0\b0  \cf8 get_contacts\cf3 ()\
+	
+\f1\b set
+\f0\b0  \cf6 MAX_RUN\cf3  
+\f1\b to
+\f0\b0  9999999\
+	
+\f1\b set
+\f0\b0  \cf6 PEOPLE_FILE\cf3  
+\f1\b to
+\f0\b0  
+\f1\b my
+\f0\b0  \cf6 ROOT_DIR\cf3  & "people"\
+	
+\f1\b set
+\f0\b0  \cf6 PHONES_FILE\cf3  
+\f1\b to
+\f0\b0  
+\f1\b my
+\f0\b0  \cf6 ROOT_DIR\cf3  & "phones"\
+	
+\f1\b set
+\f0\b0  \cf6 _details\cf3  
+\f1\b to
+\f0\b0  \{\}\
+	
+\f1\b tell
+\f0\b0  
+\f2\i \cf5 application
+\f0\i0 \cf3  "Contacts"\
+		
+\f1\b set
+\f0\b0  \cf6 _count\cf3  
+\f1\b to
+\f0\b0  
+\f1\b \cf5 count
+\f0\b0 \cf3  
+\f1\b of
+\f0\b0  
+\f1\b every
+\f0\b0  
+\f2\i \cf5 person
+\f0\i0 \cf3 \
+		
+\f1\b set
+\f0\b0  \cf6 _people\cf3  
+\f1\b to
+\f0\b0  
+\f1\b every
+\f0\b0  
+\f2\i \cf5 person
+\f0\i0 \cf3 \
+		
+\f1\b set
+\f0\b0  \cf6 _phonenums\cf3  
+\f1\b to
+\f0\b0  \{\}\
+		
+\f1\b set
+\f0\b0  \cf6 _people_string\cf3  
+\f1\b to
+\f0\b0  ""\
+		
+\f1\b set
+\f0\b0  \cf6 i\cf3  
+\f1\b to
+\f0\b0  0\
+		
+\f1\b repeat
+\f0\b0  
+\f1\b with
+\f0\b0  \cf6 _person\cf3  
+\f1\b in
+\f0\b0  \cf6 _people\cf3 \
+			
+\f1\b set
+\f0\b0  \cf6 i\cf3  
+\f1\b to
+\f0\b0  \cf6 i\cf3  + 1\
+			
+\f1\b if
+\f0\b0  \cf6 i\cf3  
+\f1\b is
+\f0\b0  
+\f1\b greater than
+\f0\b0  \cf6 MAX_RUN\cf3  
+\f1\b then
+\f0\b0 \
+				
+\f1\b return
+\f0\b0 \
+			
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+			
+\f1\b try
+\f0\b0 \
+				
+\f1\b \cf5 log
+\f0\b0 \cf3  \cf6 _person\cf3 \
+				
+\f1\b set
+\f0\b0  \cf6 first_name\cf3  
+\f1\b to
+\f0\b0  
+\f1\b my
+\f0\b0  \cf8 to_lowercase\cf3 (\cf4 first name\cf3  
+\f1\b of
+\f0\b0  \cf6 _person\cf3 )\
+				
+\f1\b set
+\f0\b0  \cf6 last_name\cf3  
+\f1\b to
+\f0\b0  
+\f1\b my
+\f0\b0  \cf8 to_lowercase\cf3 (\cf4 last name\cf3  
+\f1\b of
+\f0\b0  \cf6 _person\cf3 )\
+				\
+				
+\f1\b set
+\f0\b0  \cf6 _email\cf3  
+\f1\b to
+\f0\b0  \cf4 value\cf3  
+\f1\b of
+\f0\b0  
+\f2\i \cf5 email
+\f0\i0 \cf3  
+\f1\b of
+\f0\b0  \cf6 _person\cf3 \
+				\
+				
+\f1\b \cf5 log
+\f0\b0 \cf3  "EMAIL IS : " & \cf6 _email\cf3 \
+				\
+				
+\f1\b if
+\f0\b0  
+\f1\b my
+\f0\b0  \cf8 simple_email_test\cf3 (\cf6 first_name\cf3 ) 
+\f1\b then
+\f0\b0 \
+					
+\f1\b set
+\f0\b0  \cf6 _email\cf3  
+\f1\b to
+\f0\b0  \cf6 first_name\cf3 \
+					
+\f1\b set
+\f0\b0  \cf6 first_name\cf3  
+\f1\b to
+\f0\b0  "missing value"\
+				
+\f1\b else
+\f0\b0 \
+					
+\f1\b if
+\f0\b0  
+\f1\b my
+\f0\b0  \cf8 simple_email_test\cf3 (\cf6 last_name\cf3 ) 
+\f1\b then
+\f0\b0 \
+						
+\f1\b set
+\f0\b0  \cf6 _email\cf3  
+\f1\b to
+\f0\b0  \cf6 last_name\cf3 \
+						
+\f1\b set
+\f0\b0  \cf6 last_name\cf3  
+\f1\b to
+\f0\b0  "missing value"\
+					
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+				
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+				\
+				\cf2 -- -------------------------------------------------------------------------------------------\cf3 \
+				\cf2 -- create a continuous string of the first & last name (letters only, all lowercase)\cf3 \
+				\cf2 -- -------------------------------------------------------------------------------------------\cf3 \
+				
+\f1\b if
+\f0\b0  \cf6 first_name\cf3  
+\f1\b is not
+\f0\b0  
+\f1\b equal to
+\f0\b0  "missing value" 
+\f1\b or
+\f0\b0  \cf6 last_name\cf3  
+\f1\b is not
+\f0\b0  
+\f1\b equal to
+\f0\b0  "missing value" 
+\f1\b then
+\f0\b0 \
+					
+\f1\b set
+\f0\b0  \cf6 this_person\cf3  
+\f1\b to
+\f0\b0  ""\
+					
+\f1\b if
+\f0\b0  \cf6 first_name\cf3  
+\f1\b is not
+\f0\b0  
+\f1\b equal to
+\f0\b0  "missing value" 
+\f1\b then
+\f0\b0 \
+						
+\f1\b set
+\f0\b0  \cf6 this_person\cf3  
+\f1\b to
+\f0\b0  \cf6 this_person\cf3  & \cf6 first_name\cf3 \
+					
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+					
+\f1\b if
+\f0\b0  \cf6 last_name\cf3  
+\f1\b is not
+\f0\b0  
+\f1\b equal to
+\f0\b0  "missing value" 
+\f1\b then
+\f0\b0 \
+						
+\f1\b set
+\f0\b0  \cf6 this_person\cf3  
+\f1\b to
+\f0\b0  \cf6 this_person\cf3  & \cf6 last_name\cf3 \
+					
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+					
+\f1\b if
+\f0\b0  (
+\f1\b \cf5 count
+\f0\b0 \cf3  
+\f1\b of
+\f0\b0  \cf6 this_person\cf3 ) 
+\f1\b is
+\f0\b0  
+\f1\b greater than
+\f0\b0  0 
+\f1\b then
+\f0\b0 \
+						
+\f1\b my
+\f0\b0  \cf8 append_to_file\cf3 (
+\f1\b my
+\f0\b0  \cf8 letters_only\cf3 (\cf6 this_person\cf3 ), \cf6 PEOPLE_FILE\cf3 )\
+					
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+				
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+				\
+				
+\f1\b if
+\f0\b0  (
+\f1\b \cf5 count
+\f0\b0 \cf3  
+\f1\b of
+\f0\b0  \cf6 _email\cf3 ) 
+\f1\b is
+\f0\b0  
+\f1\b greater than
+\f0\b0  0 
+\f1\b then
+\f0\b0 \
+					
+\f1\b my
+\f0\b0  \cf8 append_to_file\cf3 (\cf6 _email\cf3 , \cf6 PEOPLE_FILE\cf3 )\
+				
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+				\
+				\cf2 -- -------------------------------------------------------------------------------------------\cf3 \
+				\cf2 -- create a continuous string of numbers only from phone numbers\cf3 \
+				\cf2 -- -------------------------------------------------------------------------------------------\cf3 \
+				
+\f1\b set
+\f0\b0  \cf6 _phones\cf3  
+\f1\b to
+\f0\b0  \cf4 value\cf3  
+\f1\b of
+\f0\b0  
+\f2\i \cf5 phones
+\f0\i0 \cf3  
+\f1\b of
+\f0\b0  \cf6 _person\cf3 \
+				
+\f1\b try
+\f0\b0 \
+					
+\f1\b repeat
+\f0\b0  
+\f1\b with
+\f0\b0  \cf6 _phone\cf3  
+\f1\b in
+\f0\b0  \cf6 _phones\cf3 \
+						
+\f1\b set
+\f0\b0  \cf6 _digits\cf3  
+\f1\b to
+\f0\b0  
+\f1\b my
+\f0\b0  \cf8 digits_only\cf3 (\cf6 _phone\cf3 )\
+						
+\f1\b if
+\f0\b0  (
+\f1\b \cf5 count
+\f0\b0 \cf3  
+\f1\b of
+\f0\b0  \cf6 _digits\cf3 ) 
+\f1\b is
+\f0\b0  
+\f1\b greater than
+\f0\b0  0 
+\f1\b then
+\f0\b0 \
+							
+\f1\b my
+\f0\b0  \cf8 append_to_file\cf3 (
+\f1\b my
+\f0\b0  \cf8 last_n_digits\cf3 (\cf6 _digits\cf3 , 7), \cf6 PHONES_FILE\cf3 )\
+						
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+					
+\f1\b end
+\f0\b0  
+\f1\b repeat
+\f0\b0 \
+				
+\f1\b on
+\f0\b0  
+\f1\b error
+\f0\b0  
+\f1\b the
+\f0\b0  \cf6 error_message\cf3  \cf5 number\cf3  
+\f1\b the
+\f0\b0  \cf6 error_number\cf3 \
+					
+\f1\b set
+\f0\b0  
+\f1\b the
+\f0\b0  \cf6 error_text\cf3  
+\f1\b to
+\f0\b0  "Error: " & 
+\f1\b the
+\f0\b0  \cf6 error_number\cf3  & ". " & 
+\f1\b the
+\f0\b0  \cf6 error_message\cf3 \
+					
+\f1\b \cf5 log
+\f0\b0 \cf3  \cf6 error_text\cf3 \
+				
+\f1\b end
+\f0\b0  
+\f1\b try
+\f0\b0 \
+			
+\f1\b on
+\f0\b0  
+\f1\b error
+\f0\b0  
+\f1\b the
+\f0\b0  \cf6 error_message\cf3  \cf5 number\cf3  
+\f1\b the
+\f0\b0  \cf6 error_number\cf3 \
+				
+\f1\b set
+\f0\b0  
+\f1\b the
+\f0\b0  \cf6 error_text\cf3  
+\f1\b to
+\f0\b0  "Error: " & 
+\f1\b the
+\f0\b0  \cf6 error_number\cf3  & ". " & 
+\f1\b the
+\f0\b0  \cf6 error_message\cf3 \
+				
+\f1\b \cf5 log
+\f0\b0 \cf3  \cf6 error_text\cf3 \
+			
+\f1\b end
+\f0\b0  
+\f1\b try
+\f0\b0 \
+		
+\f1\b end
+\f0\b0  
+\f1\b repeat
+\f0\b0 \
+	
+\f1\b end
+\f0\b0  
+\f1\b tell
+\f0\b0 \
+	
+\f1\b return
+\f0\b0  \cf6 _details\cf3 \
+
+\f1\b end
+\f0\b0  \cf8 get_contacts\cf3 \
+\
+
+\f1\b set
+\f0\b0  \cf6 _details\cf3  
+\f1\b to
+\f0\b0  
+\f1\b my
+\f0\b0  \cf8 get_contacts\cf3 ()\
+\
+\cf2 -- log _details as string\cf3 \
+
+\f1\b return
+\f0\b0 \
+
+\f1\b tell
+\f0\b0  
+\f2\i \cf5 application
+\f0\i0 \cf3  "Messages"\
+	
+\f1\b set
+\f0\b0  \cf6 chatCount\cf3  
+\f1\b to
+\f0\b0  (
+\f1\b \cf5 count
+\f0\b0 \cf3  
+\f1\b of
+\f0\b0  
+\f2\i \cf5 chats
+\f0\i0 \cf3 )\
+	
+\f1\b set
+\f0\b0  \cf6 allChats\cf3  
+\f1\b to
+\f0\b0  
+\f1\b every
+\f0\b0  
+\f2\i \cf5 chat
+\f0\i0 \cf3 \
+	
+\f1\b repeat
+\f0\b0  
+\f1\b with
+\f0\b0  \cf6 eachChat\cf3  
+\f1\b in
+\f0\b0  \cf6 allChats\cf3 \
+		
+\f1\b set
+\f0\b0  \cf6 thePeeps\cf3  
+\f1\b to
+\f0\b0  
+\f2\i \cf5 participants
+\f0\i0 \cf3  
+\f1\b of
+\f0\b0  \cf6 eachChat\cf3 \
+		
+\f1\b repeat
+\f0\b0  
+\f1\b with
+\f0\b0  \cf6 oneParticipant\cf3  
+\f1\b in
+\f0\b0  \cf6 thePeeps\cf3 \
+			
+\f1\b try
+\f0\b0 \
+				
+\f1\b set
+\f0\b0  \cf6 theHandle\cf3  
+\f1\b to
+\f0\b0  \cf4 handle\cf3  
+\f1\b of
+\f0\b0  \cf6 oneParticipant\cf3 \
+				
+\f1\b set
+\f0\b0  \cf6 haystack\cf3  
+\f1\b to
+\f0\b0  ((\cf4 full name\cf3  
+\f1\b of
+\f0\b0  \cf6 oneParticipant\cf3  & \cf6 theHandle\cf3 ) 
+\f1\b as
+\f0\b0  
+\f2\i \cf5 string
+\f0\i0 \cf3 )\
+				\
+				
+\f1\b repeat
+\f0\b0  
+\f1\b with
+\f0\b0  \cf6 needle\cf3  
+\f1\b in
+\f0\b0  \cf6 _contacts\cf3 \
+					
+\f1\b set
+\f0\b0  \cf6 _offset\cf3  
+\f1\b to
+\f0\b0  
+\f1\b \cf7 offset
+\f0\b0 \cf3  \cf7 of\cf3  \cf6 needle\cf3  \cf7 in\cf3  \cf6 haystack\cf3 \
+					
+\f1\b if
+\f0\b0  \cf6 _offset\cf3  
+\f1\b is
+\f0\b0  
+\f1\b greater than
+\f0\b0  0 
+\f1\b then
+\f0\b0 \
+						
+\f1\b \cf5 log
+\f0\b0 \cf3  ("Found " & \cf6 needle\cf3  & " at Offset : " & \cf6 _offset\cf3  & " in " & \cf6 haystack\cf3 )\
+						
+\f1\b try
+\f0\b0 \
+							\cf2 -- do shell script "echo " & quoted form of theHandle & " | egrep ^[0-9]\{4\}$"\cf3 \
+							
+\f1\b if
+\f0\b0  \cf6 chatsToKill\cf3  
+\f1\b does not
+\f0\b0  
+\f1\b contain
+\f0\b0  \cf6 eachChat's\cf3  \cf4 id\cf3  
+\f1\b then
+\f0\b0  
+\f1\b set
+\f0\b0  
+\f1\b end
+\f0\b0  
+\f1\b of
+\f0\b0  \cf6 chatsToKill\cf3  
+\f1\b to
+\f0\b0  \cf6 eachChat's\cf3  \cf4 id\cf3 \
+						
+\f1\b end
+\f0\b0  
+\f1\b try
+\f0\b0 \
+					
+\f1\b end
+\f0\b0  
+\f1\b if
+\f0\b0 \
+				
+\f1\b end
+\f0\b0  
+\f1\b repeat
+\f0\b0 \
+				\
+			
+\f1\b on
+\f0\b0  
+\f1\b error
+\f0\b0  
+\f1\b the
+\f0\b0  \cf6 error_message\cf3  \cf5 number\cf3  
+\f1\b the
+\f0\b0  \cf6 error_number\cf3 \
+				
+\f1\b set
+\f0\b0  
+\f1\b the
+\f0\b0  \cf6 error_text\cf3  
+\f1\b to
+\f0\b0  "Error: " & 
+\f1\b the
+\f0\b0  \cf6 error_number\cf3  & ". " & 
+\f1\b the
+\f0\b0  \cf6 error_message\cf3 \
+				
+\f1\b \cf7 display dialog
+\f0\b0 \cf3  
+\f1\b the
+\f0\b0  \cf6 error_text\cf3  \cf7 buttons\cf3  \{"OK"\} \cf7 default button\cf3  1\
+				
+\f1\b \cf5 log
+\f0\b0 \cf3  \cf6 theHandle\cf3 \
+				
+\f1\b return
+\f0\b0  
+\f1\b the
+\f0\b0  \cf6 error_text\cf3 \
+			
+\f1\b end
+\f0\b0  
+\f1\b try
+\f0\b0 \
+		
+\f1\b end
+\f0\b0  
+\f1\b repeat
+\f0\b0 \
+	
+\f1\b end
+\f0\b0  
+\f1\b repeat
+\f0\b0 \
+	\
+	
+\f1\b \cf5 log
+\f0\b0 \cf3  \cf6 chatsToKill\cf3 \
+	\
+	\cf2 -- repeat with deathChat in chatsToKill\cf3 \
+	\cf2 -- 	delete item 1 of (get every chat whose id = deathChat)\cf3 \
+	\cf2 -- end repeat\cf3 \
+
+\f1\b end
+\f0\b0  
+\f1\b tell
+\f0\b0 \
+}
